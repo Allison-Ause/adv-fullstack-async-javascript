@@ -19,9 +19,9 @@ import * as process from 'node:process'
 import {
   type Belly,
   type Food,
-  gobbleFood,
-  kittyCrunch,
-  cook,
+  gobbleFood, // eats food
+  kittyCrunch, //contains food array
+  cook, // cooks it
 } from './kitchen'
 
 /**
@@ -54,20 +54,37 @@ const tap1 = <A>(f: (a: A) => void): (a: A) => A => {
   }
 }
 
-/**
- * This is one of the functions you'll need to implement to make your tests
- * work.
- */
-export const eatFood = (foods: ReadonlyArray<Food>): Promise<Belly> => {
-  return Promise.resolve({nutrients: 0})
-}
+
+  //will yield an array of promises that resolve to the cooked foods
+  //we want a promise that resolves to an array of all the cooked foods.
+
+  
+
+
 
 /**
  * This is one of the functions you'll need to implement to make your tests
  * work.
  */
+export const eatFood = (foods: ReadonlyArray<Food>): Promise<Belly> => {
+  const y = foods.reduce(
+    (acc: Promise<Belly>, x: Food): Promise<Belly> => {
+      return acc.then(accBelly => {
+        return gobbleFood(x, accBelly)
+      })
+    }, Promise.resolve({nutrients: 0})
+  )
+  return y;
+}
+
+
+/**
+ * This is one of the functions you'll need to implement to make your tests
+ * work.
+ */
+
 export const properCook = (): Promise<ReadonlyArray<Food>> => {
-  return Promise.resolve([])
+  return Promise.all(kittyCrunch.map((kc) => cook(kc)))
 }
 
 export const incompleteCook = async (): Promise<ReadonlyArray<Food>> => {
@@ -100,3 +117,19 @@ if(path.basename(__filename) == process.argv[0]) {
     .then(eatFood)
     .then(tap1(() => console.log('All done!')))
 }
+
+//create a sequence for the cooking
+
+// sequence all this stuff in order
+// cook the food
+// sum the nutrients
+
+
+
+
+// we have an array of food (kitty crunch)
+// create a promise for each item in that array 
+// also create a promise that resolves to an array of all the individual resolutions.
+
+
+// cook gives us back a promise for a food item
