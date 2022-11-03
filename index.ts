@@ -78,6 +78,7 @@ export const eatFood = (foods: ReadonlyArray<Food>): Promise<Belly> => {
 }
 
 
+
 /**
  * This is one of the functions you'll need to implement to make your tests
  * work.
