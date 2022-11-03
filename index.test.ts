@@ -63,7 +63,7 @@ describe('Kitty Crunch', () => {
   // This test is left at the end so its dangling promises don't mess with the
   // cooking queues for other tests. You'll need to enable this test to see how
   // it works.
-  it('fails to cook (dangling promises)', (): Promise<any> => {
+  it.skip('fails to cook (dangling promises)', (): Promise<any> => {
     return incompleteCook()
       .then((cookedFoods) => {
         expect(cookedFoods.map(c => `${c.name}: ${c.status}`).sort())
